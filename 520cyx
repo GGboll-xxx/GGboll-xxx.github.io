@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>520 专属页面</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #ffb6c1, #ff69b4);
+            overflow: hidden;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        .content {
+            text-align: center;
+            z-index: 10;
+        }
+        
+        #greeting {
+            color: white;
+            font-size: 3em;
+            margin-bottom: 1rem;
+            animation: heartbeat 1.5s infinite, fadeIn 2s ease-in-out;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+        }
+        
+        .message {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 600px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 2s ease-in-out;
+        }
+        
+        .heart {
+            position: absolute;
+            font-size: 2em;
+            color: #ff1493;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+        }
+        
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .spinning-heart {
+            font-size: 5em;
+            animation: rotate 5s linear infinite;
+            display: inline-block;
+            margin-right: 10px;
+        }
+        
+        .button {
+            background-color: #ff69b4;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 1em;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: transform 0.3s, background-color 0.3s;
+        }
+        
+        .button:hover {
+            background-color: #ff1493;
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <h1 id="greeting"><span class="spinning-heart">❤</span> 我们的 520 纪念日</h1>
+        <div class="message">
+            <p>亲爱的，今天是 520 我爱你！</p>
+            <p>感谢你陪伴在我身边，</p>
+            <p>让我感受到满满的幸福！</p>
+            <p>愿我们的爱情像这心形一样，永远闪耀！</p>
+            <button class="button" id="love-button">点击表达爱意</button>
+        </div>
+    </div>
+    
+    <script>
+        // 创建飘动的心形
+        function createHearts() {
+            const hearts = '❤️💕💖💗💙💚💛💜';
+            const count = 20;
+            
+            for (let i = 0; i < count; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.className = 'heart';
+                    heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+                    heart.style.left = Math.random() * 100 + 'vw';
+                    heart.style.top = Math.random() * 100 + 'vh';
+                    heart.style.animationDuration = Math.random() * 2 + 2 + 's';
+                    heart.style.opacity = Math.random() * 0.7 + 0.3;
+                    heart.style.fontSize = Math.random() * 1 + 1 + 'em';
+                    
+                    document.body.appendChild(heart);
+                    
+                    // 心形飘完后移除
+                    setTimeout(() => {
+                        heart.remove();
+                    }, 5000);
+                }, i * 500);
+            }
+        }
+        
+        // 点击按钮事件
+        document.getElementById('love-button').addEventListener('click', function() {
+            this.textContent = '我爱你！';
+            this.style.backgroundColor = '#ff1493';
+            
+            // 创建更多飘动的心形
+            createHearts();
+            
+            // 3秒后恢复按钮状态
+            setTimeout(() => {
+                this.textContent = '点击表达爱意';
+                this.style.backgroundColor = '#ff69b4';
+            }, 3000);
+        });
+        
+        // 页面加载时创建初始心形
+        window.addEventListener('load', createHearts);
+        
+        // 滚动时创建更多心形
+        window.addEventListener('scroll', createHearts);
+    </script>
+</body>
+</html>
